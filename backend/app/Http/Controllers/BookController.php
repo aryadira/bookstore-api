@@ -107,4 +107,25 @@ class BookController extends Controller
             'message' => 'Book deleted successfully'
         ]);
     }
+
+    // by user
+    public function showByUser($id)
+    {
+        $user = Auth::user();
+
+        $books = Book::where('user_id', $id)->get();
+
+        if ($books->count() == 0) {
+            return response()->json([
+                'message' => 'You never publish a book'
+            ]);
+        }
+
+        return response()->json([
+            'data' => [
+                'user' => $user->username,
+                'books' => $books
+            ]
+        ]);
+    }
 }

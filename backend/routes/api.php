@@ -34,6 +34,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/books/{id}', [BookController::class, 'update']);
     Route::delete('/books/{id}', [BookController::class, 'destroy']);
 
+    // books by user
+    Route::get('/users/{id}/books', [BookController::class, 'showByUser']);
+
     // yg bisa cuma admin
     Route::middleware('restrictRole:admin')->group(function () {
         // Route::get('/users', [PostController::class, 'show'])->middleware('restrictRole:admin');
