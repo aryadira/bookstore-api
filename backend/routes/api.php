@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\RentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +37,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     // books by user
     Route::get('/users/{id}/books', [BookController::class, 'showByUser']);
+
+    // rent by user
+    Route::get('/users/rents', [RentController::class, 'showRentByUser']);
+    Route::post('/users/rent-book/{book_id}', [RentController::class, 'storeRent']);
+    Route::post('/users/return-book/{book_id}', [RentController::class, 'returnRent']);
 
     // yg bisa cuma admin
     Route::middleware('restrictRole:admin')->group(function () {
