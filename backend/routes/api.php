@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\RentController;
+use App\Http\Controllers\RentReturnController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -41,7 +42,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     // rent by user
     Route::get('/users/rents', [RentController::class, 'showRentByUser']);
     Route::post('/users/rent-book/{book_id}', [RentController::class, 'storeRent']);
-    Route::post('/users/return-book/{book_id}', [RentController::class, 'returnRent']);
+    Route::post('/users/return-book/{book_id}', [RentReturnController::class, 'returnRent']);
 
     // yg bisa cuma admin
     Route::middleware('restrictRole:admin')->group(function () {

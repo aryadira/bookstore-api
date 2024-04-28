@@ -4,14 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Book extends Model
+class RentReturn extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'title', 'price', 'author', 'description', 'user_id'
+        'rent_return', 'rent_id', 'user_id', 'book_id'
     ];
 
     public function user()
@@ -21,11 +20,11 @@ class Book extends Model
 
     public function rent()
     {
-        return $this->belongsTo(Rent::class, 'book_id', 'id');
+        return $this->belongsTo(Rent::class, 'rent_id', 'id');
     }
 
-    public function rent_return()
+    public function book()
     {
-        return $this->belongsTo(RentReturn::class, 'book_Id', 'id');
+        return $this->belongsTo(Book::class, 'book_id', 'id');
     }
 }

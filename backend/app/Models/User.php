@@ -28,4 +28,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Rent::class, 'user_id', 'id');
     }
+
+    public function rent_return()
+    {
+        return $this->hasMany(RentReturn::class, 'user_id', 'id');
+    }
 }

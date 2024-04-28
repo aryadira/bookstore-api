@@ -22,4 +22,9 @@ class Rent extends Model
     {
         return $this->belongsTo(Book::class, 'book_id', 'id');
     }
+
+    public function rent_return()
+    {
+        return $this->belongsTo(RentReturn::class, 'rent_id', 'id');
+    }
 }

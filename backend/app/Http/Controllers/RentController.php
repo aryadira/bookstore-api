@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\Rent;
+use App\Models\RentReturn;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +16,12 @@ class RentController extends Controller
         $user = Auth::user();
 
         $rents = Rent::where('user_id', $user->id)->get();
+
+        if ($rents->count() == 0) {
+            return response()->json([
+                'message' => 'You havent rent a book'
+            ]);
+        }
 
         return response()->json([
             'user' => $user->id,
@@ -60,24 +67,6 @@ class RentController extends Controller
             'user' => $user->id,
             'book' => $book,
             'rent_date' => $newRent->rent_date,
-        ]);
-    }
-
-    public function returnRent($book_id)
-    {
-        $user = Auth::user();
-        $book = Book::where('id', $book_id)->orWhere('user_id', $user->id)->first();
-
-        $rent = Rent::where('user_id', $user->id)->orWhere('book_id', $book_id)->first();
-
-        $rent->update([
-            'rent_return' => date('Y:m:d H:i:s'),
-        ]);
-
-        return response()->json([
-            'user' => $user->id,
-            'book' => $book->title,
-            'rent_return' => $rent->rent_return
         ]);
     }
 
